@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project — Harrison Grant</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">Engineering Portfolio</a>
+      <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="resume.html">Resumé &amp; Contact</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/harrisongrant04/" target="_blank" rel="noopener" class="nav-linkedin" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Project Content — filled by JavaScript -->
+  <div id="project-page"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    &copy; <span id="year"></span> Harrison Grant
+  </footer>
+
+  <script src="projects.js"></script>
+  <script>
+    // --- Get project ID from URL ---
+    const params = new URLSearchParams(window.location.search);
+    const projectId = params.get('id');
+    const project = PROJECTS.find(p => p.id === projectId);
+
+    const container = document.getElementById('project-page');
+
+    if (!project) {
+      container.innerHTML = `
+        <div class="project-hero">
+          <a href="index.html" class="project-back">← Back to Projects</a>
+          <h1>Project not found</h1>
+          <p style="color:var(--fg-muted);margin-top:1rem;">
+            The project you're looking for doesn't exist. <a href="index.html">Return home</a>.
+          </p>
+        </div>
+      `;
+    } else {
+      // Update page title
+      document.title = `${project.title} — Harrison Grant`;
+
+      // Build sections
+      const sectionsHTML = project.sections.map(section => {
+        let html = '<div class="project-section fade-in">';
+        if (section.heading) html += `<h2>${section.heading}</h2>`;
+        if (section.text)    html += `<p>${section.text}</p>`;
+        if (section.images && section.images.length) {
+          const cls = section.images.length === 1 ? 'project-images single' : 'project-images';
+          html += `<div class="${cls}">`;
+          html += section.images.map(src => `<img src="${src}" alt="${section.heading || project.title}">`).join('');
+          html += '</div>';
+        }
+        html += '</div>';
+        return html;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="project-hero fade-in">
+          <a href="index.html" class="project-back">← Back to Projects</a>
+          <h1>${project.heroTitle || project.title}</h1>
+        </div>
+        <div class="project-content">${sectionsHTML}</div>
+      `;
+    }
+
+    // --- Year ---
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --- Scroll fade-in ---
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
