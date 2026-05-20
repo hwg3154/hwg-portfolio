@@ -75,6 +75,10 @@ const PROJECTS = [
         ]
       },
       {
+        heading: "In Action",
+        video: "images/chessinator-video.mov"
+      },
+      {
         heading: "Design Challenges",
         text: "This project had 3 primary components: The structure and layout, the electronics and integration, and the end effector including the Z axis.\n\nThe structure was fairly straightforward — we decided on aluminum extrusion construction and stepper motors with a belt to drive motion. The board itself was cut from a sheet of acrylic and engraved with a scaled image of a chessboard. Acrylic was chosen for its ease of workability and final surface quality.\n\nThe electronics were complicated because of our chosen manipulation method and control board. We elected to use an electromagnet to capture the piece and a servo driven Z axis to raise and lower the pieces. While the servo could be controlled directly by the MKS 3D printer board, there was no output for the electromagnet. We had originally planned to use the fan output as a switching 12V source, but were unable to validate that method. In the end I found that a motor output could be manipulated into outputting 12V across 2 of its 4 pins with a specific GCODE command. Using parts outside of their intended use case was the breakthrough needed to make this project possible.\n\nThe end effector was engineered with packaging as a priority. Lightweight was a necessity so that the system could make moves as fast as possible. It would have been easier and more precise to use a much larger stepper motor, but that would have raised the weight and size of the end effector unacceptably. Instead, a servo motor was chosen. The servo motor had adequate accuracy and power to move the weight of the electromagnet and a piece without being over-specced (and overweight) for the job."
       },
