@@ -21,8 +21,52 @@
 // ============================================================
 
 const PROJECTS = [
+  // URL-friendly ID (no spaces, lowercase, used in the URL)
+
   {
-    // URL-friendly ID (no spaces, lowercase, used in the URL)
+    id: "treatturbine",
+    title: "TreatTurbine",
+    subtitle: "Open-source autonomous treat delivery drone for wildlife",
+    thumbnail: "images/treatturbine-thumb.jpg",
+    heroTitle: "TreatTurbine",
+    sections: [
+      {
+        heading: "The Problem",
+        text: "Alveus Sanctuary wanted a way to let their livestream audience interact directly with the animals — specifically, a system that a viewer could trigger with a donation to deliver treats by air to the sanctuary's wolf dogs, Awa and Akela. Our team of five took this on as a 6-month capstone project, with the system needing to meet five requirements in order of priority: it had to be safe, reliable, easy to operate, capable of delivering multiple treats without intervention, and spectacular to watch on stream."
+      },
+      {
+        heading: "The Solution",
+        images: [
+          "images/treatturbine-1.jpg",
+          "images/treatturbine-2.jpg"
+        ]
+      },
+      {
+        heading: "In Action",
+        video: "PASTE_YOUTUBE_LINK_HERE"
+      },
+      {
+        heading: "Design Challenges",
+        text: "The treat-dispensing mechanism, which we named the TreatTurbine, is a partitioned drum with multiple compartments, paired with an interchangeable TPU ring that has a set of teeth molded into its outer edge. A servo with a custom 3D printed arm strikes one tooth to advance the drum a single compartment, then winds back, slipping over the next tooth to reset for the following strike. Even though the servo had closed-loop position feedback, software control alone wasn't enough to make it advance exactly one compartment every time — the drum would occasionally over- or under-rotate. We solved this by pausing the print partway through and embedding small magnets directly into the TPU ring, letting the drum index itself mechanically against a fixed detent rather than relying purely on commanded servo position. That one change took indexing from inconsistent to perfectly repeatable.\n\nIn parallel, we built an open source drone frame and outfitted it as a fully autonomous platform: a Pixhawk flight controller running ArduPilot, a GPS module, a video transmission system, and mounting rails to carry the TreatTurbine payload. Because the aircraft needed three independent radio links running simultaneously — manual flight control, telemetry, and live video — interference was a real risk. We split them across three separate bands: the manual radio controller ran at 2.4GHz, telemetry at 900MHz, and the Walksnail Avatar video transmitter at 5.8GHz, keeping all three clear of one another.\n\nThe last piece, still in development with Alveus as they build out the supporting infrastructure, is the audience-facing trigger: a livestream viewer will be able to donate roughly $50 on Twitch to autonomously launch a treat-drop mission in real time."
+      },
+      {
+        heading: "Testing",
+        text: "We tested the system in stages. First, we flew a fully autonomous mission in the snow in Boston to validate the GPS-guided flight plan. From there, the team traveled to Alveus Sanctuary in Texas over spring break for several shakedown flights in an open field, followed by a manual test flown with the sanctuary's animal care staff present to confirm safety around the animals. The project culminated in three back-to-back autonomous treat-drop missions flown live on stream, watched by roughly 1,500 viewers.",
+        images: [
+          "images/treatturbine-3.jpg",
+          "images/treatturbine-4.jpg"
+        ]
+      },
+      {
+        heading: "Outcome",
+        text: "The TreatTurbine successfully and repeatably delivered treats to Awa and Akela in front of a live audience, meeting every requirement Alveus set out — safe, reliable, simple to operate, and genuinely fun to watch. We've open sourced the full project, including the mechanism design and drone build, on GitHub (github.com/skbecken/treatturbine) so other conservationists and hobbyists can build their own. The drone currently remains with Alveus while they finish building the Twitch donation integration that will let viewers trigger drops themselves.",
+        images: [
+          "images/treatturbine-5.jpg"
+        ]
+      }
+    ]
+  },
+  {
     id: "coin-collector",
 
     // What shows on the project card on the home page
