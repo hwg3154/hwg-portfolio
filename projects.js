@@ -105,7 +105,7 @@ const PROJECTS = [
     // What shows on the project card on the home page
     title: "Coin Collecting Robot",
     subtitle: "Hackathon — 2nd Place",
-    thumbnail: "images/coin-collector-thumb.jpg",
+    thumbnail: { src: "images/coin-collector-2b.png", focus: "49% 63%" },
 
     // Full project page content
     heroTitle: "The Coin Collector",

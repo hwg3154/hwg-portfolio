@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crop Helper — Harrison Grant Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  :root{
+    --bg:#ffffff; --bg-subtle:#f5f6f8; --fg:#111113; --fg-muted:#61656e;
+    --accent:#1e3a5f; --accent-hover:#2a4f7a; --accent-subtle:#e8edf3;
+    --border:#e2e4e8; --radius:4px; --font-body:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--fg);background:var(--bg-subtle);line-height:1.5;padding:2rem 1.5rem 4rem;}
+  .wrap{max-width:1000px;margin:0 auto;}
+  h1{font-size:1.5rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.35rem;}
+  .sub{color:var(--fg-muted);font-size:0.9rem;margin-bottom:2rem;max-width:640px;}
+  .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;}
+  .card h2{font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:1rem;}
+  .row{display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin-bottom:1rem;}
+  select, input[type="file"]{
+    font-family:inherit;font-size:0.85rem;padding:0.5rem 0.7rem;border:1px solid var(--border);
+    border-radius:var(--radius);background:#fff;color:var(--fg);
+  }
+  .drop{
+    border:2px dashed var(--border);border-radius:var(--radius);padding:2.5rem 1rem;text-align:center;
+    color:var(--fg-muted);font-size:0.85rem;cursor:pointer;transition:border-color 0.2s, background 0.2s;
+  }
+  .drop:hover, .drop.drag{border-color:var(--accent);background:var(--accent-subtle);}
+  .stage{
+    position:relative;display:inline-block;max-width:100%;border-radius:var(--radius);overflow:hidden;
+    cursor:crosshair;border:1px solid var(--border);background:repeating-conic-gradient(#eee 0% 25%, #fff 0% 50%) 50%/16px 16px;
+  }
+  .stage img{display:block;max-width:100%;max-height:60vh;user-select:none;-webkit-user-drag:none;}
+  .marker{
+    position:absolute;width:22px;height:22px;margin-left:-11px;margin-top:-11px;
+    border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 2px var(--accent), 0 2px 6px rgba(0,0,0,0.35);
+    pointer-events:none;
+  }
+  .marker::before, .marker::after{
+    content:'';position:absolute;background:#fff;box-shadow:0 0 0 1px var(--accent);
+  }
+  .marker::before{left:50%;top:-6px;bottom:-6px;width:2px;transform:translateX(-1px);}
+  .marker::after{top:50%;left:-6px;right:-6px;height:2px;transform:translateY(-1px);}
+  .hint{font-size:0.78rem;color:var(--fg-muted);margin-top:0.6rem;}
+  .previews{display:flex;flex-wrap:wrap;gap:1.25rem;}
+  .preview-item{flex:1 1 200px;max-width:260px;}
+  .preview-item p{font-size:0.75rem;color:var(--fg-muted);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.04em;font-weight:600;}
+  .preview-box{width:100%;border-radius:var(--radius);overflow:hidden;background:var(--bg-subtle);border:1px solid var(--border);}
+  .preview-box img{width:100%;height:100%;object-fit:cover;display:block;}
+  .ratio-45{aspect-ratio:4/5;}
+  .ratio-1610{aspect-ratio:16/10;}
+  code.out{
+    display:block;background:#0f1115;color:#c9d6e3;font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:0.85rem;padding:1rem 1.1rem;border-radius:var(--radius);white-space:pre-wrap;word-break:break-word;
+  }
+  .copy-btn{
+    margin-top:0.75rem;background:var(--accent);color:#fff;border:none;padding:0.55rem 1.1rem;border-radius:var(--radius);
+    font-weight:600;font-size:0.8rem;cursor:pointer;transition:background 0.2s;
+  }
+  .copy-btn:hover{background:var(--accent-hover);}
+  .empty-note{color:var(--fg-muted);font-size:0.85rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Crop Helper</h1>
+  <p class="sub">A local, offline tool for picking the "focus point" of a photo — the spot the site will always keep visible when it crops the image to fit a box. Nothing here uploads anywhere; it all runs in your browser.</p>
+
+  <div class="card">
+    <h2>1. Load a photo</h2>
+    <div id="drop" class="drop">Click to choose a photo, or drag one here</div>
+    <input type="file" id="fileInput" accept="image/*" style="display:none;">
+  </div>
+
+  <div class="card" id="stageCard" style="display:none;">
+    <h2>2. Click the point that should stay in frame</h2>
+    <div class="stage" id="stage">
+      <img id="stageImg" src="" alt="">
+      <div class="marker" id="marker" style="display:none;"></div>
+    </div>
+    <p class="hint">Tip: click on the eyes / top of the head for portraits — that's usually what's getting cut off.</p>
+  </div>
+
+  <div class="card" id="previewCard" style="display:none;">
+    <h2>3. Preview at each crop this site uses</h2>
+    <div class="previews">
+      <div class="preview-item">
+        <p>Hero photo (4:5)</p>
+        <div class="preview-box ratio-45"><img id="prevHero" src="" alt=""></div>
+      </div>
+      <div class="preview-item">
+        <p>Project card / detail (16:10)</p>
+        <div class="preview-box ratio-1610"><img id="prevCard" src="" alt=""></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="outputCard" style="display:none;">
+    <h2>4. Paste this into projects.js</h2>
+    <p class="empty-note" style="margin-bottom:0.75rem;">Replace the plain filename for this photo with the object below (update the path if needed — this assumes the file lives in <code>images/</code>).</p>
+    <code class="out" id="outCode"></code>
+    <button class="copy-btn" id="copyBtn">Copy code</button>
+  </div>
+</div>
+
+<script>
+  const drop = document.getElementById('drop');
+  const fileInput = document.getElementById('fileInput');
+  const stageCard = document.getElementById('stageCard');
+  const previewCard = document.getElementById('previewCard');
+  const outputCard = document.getElementById('outputCard');
+  const stage = document.getElementById('stage');
+  const stageImg = document.getElementById('stageImg');
+  const marker = document.getElementById('marker');
+  const prevHero = document.getElementById('prevHero');
+  const prevCard = document.getElementById('prevCard');
+  const outCode = document.getElementById('outCode');
+  const copyBtn = document.getElementById('copyBtn');
+
+  let fileName = 'your-photo.jpg';
+
+  drop.addEventListener('click', () => fileInput.click());
+  ['dragover','dragenter'].forEach(evt => drop.addEventListener(evt, e => { e.preventDefault(); drop.classList.add('drag'); }));
+  ['dragleave','drop'].forEach(evt => drop.addEventListener(evt, e => { e.preventDefault(); drop.classList.remove('drag'); }));
+  drop.addEventListener('drop', e => { if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+  fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
+
+  function loadFile(file){
+    fileName = file.name;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const src = e.target.result;
+      stageImg.src = src;
+      prevHero.src = src;
+      prevCard.src = src;
+      stageCard.style.display = 'block';
+      previewCard.style.display = 'block';
+      marker.style.display = 'none';
+      outputCard.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  stage.addEventListener('click', e => {
+    const rect = stageImg.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    const cx = Math.max(0, Math.min(100, x));
+    const cy = Math.max(0, Math.min(100, y));
+
+    marker.style.left = ((rect.left - stage.getBoundingClientRect().left) + (cx/100)*rect.width) + 'px';
+    marker.style.top = ((rect.top - stage.getBoundingClientRect().top) + (cy/100)*rect.height) + 'px';
+    marker.style.display = 'block';
+
+    const pos = `${cx.toFixed(0)}% ${cy.toFixed(0)}%`;
+    prevHero.style.objectPosition = pos;
+    prevCard.style.objectPosition = pos;
+
+    outCode.textContent = `{ src: "images/${fileName}", focus: "${pos}" }`;
+    outputCard.style.display = 'block';
+  });
+
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(outCode.textContent).then(() => {
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => copyBtn.textContent = 'Copy code', 1200);
+    });
+  });
+</script>
+</body>
+</html>
