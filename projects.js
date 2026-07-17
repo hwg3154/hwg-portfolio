@@ -148,7 +148,7 @@ const PROJECTS = [
         heading: "The Solution",
         images: [
           "images/flight-club-1.jpg",
-          "images/flight-club-2.png"
+          "images/flight-club-2.jpg"
         ]
       },
       {
@@ -167,7 +167,7 @@ const PROJECTS = [
     sections: [
       {
         heading: "Impact",
-        text: "Over the course of my 8 weeks with Formlabs, I completed numerous projects advancing progress and removing roadblocks on our road to prototype 1. Because of the nature of R&D work, details are bounded by concerns about intellectual property, but my work included: working with suppliers to cut lead times and negotiate discounts, designing and implementing testing mechanisms for mission-critical parts, and designing peripheral systems to support prototype 1."
+        text: "Over the course of my 8 weeks with Formlabs, I completed numerous projects advancing progress and removing roadblocks on our road to prototype 1 for the project that would eventually become the Fuse X1. My work included: working with suppliers to cut lead times and negotiate discounts, designing and implementing testing mechanisms for mission-critical parts, and designing peripheral systems to support prototype 1. Thoug my internship wasn't long enough to see the Fuse X1 to its release, it was hugely rewarding to work on a product so early in development."
       },
       {
         heading: "Sheet Metal Design",
@@ -265,7 +265,7 @@ const PROJECTS = [
 
 const SITE_CONFIG = {
   name: "Harrison Grant",
-  siteTitle: "Engineering Portfolio",
+  siteTitle: "Harrison Grant - Mechanical Engineer",
   linkedIn: "https://www.linkedin.com/in/harrisongrant04/",
   email: "hgrant@bu.edu",
   phone: "781-535-1233",
