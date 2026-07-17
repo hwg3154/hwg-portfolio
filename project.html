@@ -66,7 +66,10 @@
         if (section.images && section.images.length) {
           const cls = section.images.length === 1 ? 'project-images single' : 'project-images';
           html += `<div class="${cls}">`;
-          html += section.images.map(src => `<img src="${src}" alt="${section.heading || project.title}">`).join('');
+          html += section.images.map(entry => {
+            const a = imgAttrs(entry);
+            return `<img src="${a.src}" style="${a.style}" alt="${section.heading || project.title}">`;
+          }).join('');
           html += '</div>';
         }
         if (section.video) {

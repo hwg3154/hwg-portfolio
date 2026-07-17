@@ -18,7 +18,40 @@
 //  HOW TO REORDER PROJECTS:
 //  Cut and paste a whole { ... }, block to move it up or down.
 //
+//  FIXING A CROPPED / OFF-CENTER PHOTO:
+//  Every image below is normally just a plain filename, e.g.:
+//
+//      thumbnail: "images/my-project-thumb.jpg"
+//
+//  Images get cropped to fit their box (thumbnails, hero photos, etc.),
+//  and by default that crop is centered — which is why heads or subjects
+//  can get cut off. If a specific photo needs adjusting, swap the plain
+//  filename for an object with a "focus" point instead:
+//
+//      thumbnail: { src: "images/my-project-thumb.jpg", focus: "50% 20%" }
+//
+//  The focus is the point (as % from left, % from top) that the crop will
+//  always keep visible. "50% 20%" keeps things centered horizontally but
+//  biased toward the top of the photo, so a head near the top doesn't get
+//  cut off. You can also use plain words: "top", "bottom", "top left", etc.
+//
+//  This works on ANY image field: thumbnail, heroImages, and section images.
+//
+//  Don't want to guess the numbers? Open crop-helper.html in your browser,
+//  drop the photo in, drag the crosshair to where you want the focus, and
+//  it will show you a live preview plus the exact code to paste in.
+//
 // ============================================================
+
+// Turns an image entry into { src, style }.
+// Accepts either a plain string ("images/x.jpg") or an object with an
+// optional focus point ({ src: "images/x.jpg", focus: "50% 20%" }).
+// You shouldn't need to touch this function — it's used automatically
+// by index.html and project.html when they render your images.
+function imgAttrs(entry) {
+  if (typeof entry === "string") return { src: entry, style: "" };
+  return { src: entry.src, style: entry.focus ? `object-position:${entry.focus};` : "" };
+}
 
 const PROJECTS = [
   // URL-friendly ID (no spaces, lowercase, used in the URL)
@@ -84,8 +117,8 @@ const PROJECTS = [
       {
         heading: "The Robot",
         images: [
-          "images/coin-collector-1.jpg",
-          "images/coin-collector-2.jpg"
+          { src: "images/coin-collector-1.jpg", focus: "32% 80%" },
+          { src: "images/coin-collector-2b.png", focus: "49% 63%" }
         ]
       },
       {
