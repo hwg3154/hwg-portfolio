@@ -84,7 +84,7 @@ const PROJECTS = [
       },
       {
         heading: "Testing",
-        text: "We tested the system in stages. First, we flew a fully autonomous mission in Boston to validate the GPS-guided flight plan and our airframe. Time constraints throughout the academic year pushed our testing into the middle of winter and hampered out testing efforts. However, when Spring came, we pulled all the independently verified components together and traveled to Alveus Sanctuary in Texas. Once there, we performed several shakedown flights in an open field, verifying autonmouse flight, airborne treat dispensing, and even radio loss failsafe events. This was followed by a manual test flown with the sanctuary's animal care staff present to confirm not only the safety of the animals, but their comfort. The project culminated in three back-to-back autonomous treat-drop missions flown live on stream, where we were spectated by roughly 1,500 viewers.",
+        text: "We tested the system in stages. First, we flew a fully autonomous mission in Boston to validate the GPS-guided flight plan and our airframe. Time constraints throughout the academic year pushed our testing into the middle of winter and hampered our testing efforts. However, when Spring came, we pulled all the independently verified components together and traveled to Alveus Sanctuary in Texas. Once there, we performed several shakedown flights in an open field, verifying autonomous flight, airborne treat dispensing, and even radio loss failsafe events. This was followed by a manual test flown with the sanctuary's animal care staff present to confirm not only the safety of the animals, but their comfort. The project culminated in three back-to-back autonomous treat-drop missions flown live on stream, where we were spectated by roughly 1,500 viewers.",
         images: [
           "images/treatturbine-3.jpg",
           "images/treatturbine-4.jpg"
@@ -200,7 +200,7 @@ const PROJECTS = [
     sections: [
       {
         heading: "Impact",
-        text: "Over the course of my 8 weeks with Formlabs, I completed numerous projects advancing progress and removing roadblocks on our road to prototype 1 for the project that would eventually become the Fuse X1. My work included: working with suppliers to cut lead times and negotiate discounts, designing and implementing testing mechanisms for mission-critical parts, and designing peripheral systems to support prototype 1. Thoug my internship wasn't long enough to see the Fuse X1 to its release, it was hugely rewarding to work on a product so early in development."
+        text: "Over the course of my 8 weeks with Formlabs, I completed numerous projects advancing progress and removing roadblocks on our road to prototype 1 for the project that would eventually become the Fuse X1. My work included: working with suppliers to cut lead times and negotiate discounts, designing and implementing testing mechanisms for mission-critical parts, and designing peripheral systems to support prototype 1. Though my internship wasn't long enough to see the Fuse X1 to its release, it was hugely rewarding to work on a product so early in development."
       },
       {
         heading: "Sheet Metal Design",
