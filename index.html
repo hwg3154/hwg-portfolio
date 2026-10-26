@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Harrison Grant — Engineering Portfolio</title>
   <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#ffffff">
+  <script>
+    (function () {
+      try { localStorage.removeItem('hwg-theme'); } catch (e) {}
+      var q = new URLSearchParams(location.search).get('theme');
+      var t = (q === 'dark' || q === 'light')
+        ? q
+        : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', t === 'dark' ? '#0e1116' : '#ffffff');
+    })();
+  </script>
+  <script src="theme.js" defer></script>
 </head>
 <body>
 
@@ -12,6 +26,11 @@
   <nav class="site-nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">Engineering Portfolio</a>
+      <div class="nav-actions">
+      <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 14.5A8.5 8.5 0 1 1 9.5 3a7 7 0 0 0 11.5 11.5z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></g></svg>
+      </button>
       <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
         <span></span><span></span><span></span>
       </button>
@@ -24,6 +43,7 @@
           </a>
         </li>
       </ul>
+      </div>
     </div>
   </nav>
 
@@ -39,6 +59,7 @@
     &copy; <span id="year"></span> Harrison Grant
   </footer>
 
+  <script src="opt-manifest.js"></script>
   <script src="projects.js"></script>
   <script>
     // --- Render Hero ---
@@ -50,9 +71,8 @@
         <p class="hero-about">${SITE_CONFIG.aboutText}</p>
       </div>
       <div class="hero-images fade-in">
-        ${SITE_CONFIG.heroImages.map(entry => {
-          const a = imgAttrs(entry);
-          return `<img src="${a.src}" style="${a.style}" alt="${SITE_CONFIG.name}">`;
+        ${SITE_CONFIG.heroImages.map((entry, i) => {
+          return imgTag(entry, "hero", SITE_CONFIG.name, "", i === 0);
         }).join('')}
       </div>
     `;
@@ -64,9 +84,8 @@
       card.href = `project.html?id=${p.id}`;
       card.className = 'project-card fade-in';
       card.style.transitionDelay = `${i * 0.08}s`;
-      const thumb = imgAttrs(p.thumbnail);
       card.innerHTML = `
-        <img class="project-card-img" src="${thumb.src}" style="${thumb.style}" alt="${p.title}">
+        ${imgTag(p.thumbnail, "card", p.title, "project-card-img")}
         <div class="project-card-body">
           <h3>${p.title}</h3>
           <p>${p.subtitle}</p>

@@ -7,7 +7,9 @@
 //  2. Copy one of the project objects below
 //  3. Paste it at the TOP of the array (so it shows first)
 //  4. Fill in your details
-//  5. Save and refresh your site — done!
+//  5. Run:  python3 optimize-images.py
+//     (builds the small WebP files the site actually loads)
+//  6. Save and refresh your site — done!
 //
 //  HOW TO EDIT A PROJECT:
 //  Just change the text below and save.
@@ -43,14 +45,52 @@
 //
 // ============================================================
 
-// Turns an image entry into { src, style }.
-// Accepts either a plain string ("images/x.jpg") or an object with an
-// optional focus point ({ src: "images/x.jpg", focus: "50% 20%" }).
-// You shouldn't need to touch this function — it's used automatically
-// by index.html and project.html when they render your images.
-function imgAttrs(entry) {
-  if (typeof entry === "string") return { src: entry, style: "" };
-  return { src: entry.src, style: entry.focus ? `object-position:${entry.focus};` : "" };
+// Turns an image entry into the attributes the templates need.
+// Accepts a filename ("images/x.jpg") or { src, focus }.
+// If optimize-images.py has built a variant, the page requests that
+// sized WebP instead of the original camera file.
+function imgAttrs(entry, role) {
+  var src = typeof entry === "string" ? entry : entry.src;
+  var style = entry && entry.focus ? "object-position:" + entry.focus + ";" : "";
+  var variants = (typeof OPTIMIZED !== "undefined" && OPTIMIZED[src]) || null;
+  var eager = role === "hero";
+  var sizes = role === "hero"
+    ? "(max-width: 768px) 50vw, 280px"
+    : role === "card"
+      ? "(max-width: 768px) 100vw, 360px"
+      : "(max-width: 768px) 100vw, 600px";
+  var dims = role === "hero" ? [4, 5] : [16, 10];
+  var out = {
+    src: src,
+    srcset: "",
+    sizes: sizes,
+    style: style,
+    loading: eager ? "eager" : "lazy",
+    fetchpriority: "auto",
+    width: String(dims[0] * 100),
+    height: String(dims[1] * 100)
+  };
+  if (variants && variants.length) {
+    out.srcset = variants.map(function (v) { return v.src + " " + v.w + "w"; }).join(", ");
+    var pick = variants[variants.length - 1];
+    for (var i = 0; i < variants.length; i++) {
+      if (variants[i].w >= 640) { pick = variants[i]; break; }
+    }
+    out.src = pick.src;
+  }
+  return out;
+}
+
+function imgTag(entry, role, alt, extraClass, highPriority) {
+  var a = imgAttrs(entry, role);
+  if (highPriority) a.fetchpriority = "high";
+  var cls = extraClass ? ' class="' + extraClass + '"' : "";
+  var srcset = a.srcset ? ' srcset="' + a.srcset + '" sizes="' + a.sizes + '"' : "";
+  var pri = a.fetchpriority === "high" ? ' fetchpriority="high"' : "";
+  return '<img' + cls + ' src="' + a.src + '"' + srcset +
+    ' width="' + a.width + '" height="' + a.height + '"' +
+    ' style="' + a.style + '" alt="' + alt + '"' +
+    ' loading="' + a.loading + '" decoding="async"' + pri + '>';
 }
 
 const PROJECTS = [
