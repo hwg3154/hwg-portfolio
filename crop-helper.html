@@ -99,7 +99,7 @@
 
   <div class="card" id="outputCard" style="display:none;">
     <h2>4. Paste this into projects.js</h2>
-    <p class="empty-note" style="margin-bottom:0.75rem;">Replace the plain filename for this photo with the object below (update the path if needed — this assumes the file lives in <code>images/</code>).</p>
+    <p class="empty-note" style="margin-bottom:0.75rem;">Replace the plain filename for this photo with the object below (update the path if needed — this assumes the file lives in <code>images/&lt;project&gt;/</code>).</p>
     <code class="out" id="outCode"></code>
     <button class="copy-btn" id="copyBtn">Copy code</button>
   </div>
@@ -158,7 +158,7 @@
     prevHero.style.objectPosition = pos;
     prevCard.style.objectPosition = pos;
 
-    outCode.textContent = `{ src: "images/${fileName}", focus: "${pos}" }`;
+    outCode.textContent = `{ src: "images/<project>/${fileName}", focus: "${pos}" }`;
     outputCard.style.display = 'block';
   });
 

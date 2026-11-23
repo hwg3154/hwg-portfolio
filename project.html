@@ -58,6 +58,43 @@
   <script src="opt-manifest.js"></script>
   <script src="projects.js"></script>
   <script>
+    // One large photo, with every frame as a thumbnail underneath.
+    // The first entry in the list is the one shown on load.
+    function renderCarousel(images, label) {
+      const frames = images.map((entry, index) => {
+        const attrs = imgAttrs(entry, "detail");
+        const position = typeof entry === "object" && entry.focus ? entry.focus : "center";
+        return {
+          src: attrs.src,
+          srcset: attrs.srcset,
+          sizes: attrs.sizes,
+          style: attrs.style,
+          position: position,
+          alt: `${label}, image ${index + 1} of ${images.length}`
+        };
+      });
+      const first = frames[0];
+      const thumbs = frames.map((frame, index) => `
+        <button type="button" class="carousel-thumb${index === 0 ? " is-active" : ""}" role="tab"
+          aria-selected="${index === 0 ? "true" : "false"}"
+          aria-label="Show image ${index + 1} of ${frames.length}"
+          data-index="${index}">
+          <img src="${frame.src}"${frame.srcset ? ` srcset="${frame.srcset}" sizes="${frame.sizes}"` : ""} style="${frame.style}" alt="">
+        </button>
+      `).join("");
+      return `
+        <div class="carousel" data-carousel>
+          <div class="carousel-stage">
+            ${imgTag(images[0], "detail", first.alt, "carousel-feature")}
+          </div>
+          <div class="carousel-filmstrip" role="tablist" aria-label="${label}">
+            ${thumbs}
+          </div>
+          ${'<script type="application/json" class="carousel-frames">' + JSON.stringify(frames).replace(/</g, "\\u003c") + "</" + "script>"}
+        </div>
+      `;
+    }
+
     // --- Get project ID from URL ---
     const params = new URLSearchParams(window.location.search);
     const projectId = params.get('id');
@@ -92,6 +129,9 @@
           }).join('');
           html += '</div>';
         }
+        if (section.carousel && section.carousel.length) {
+          html += renderCarousel(section.carousel, section.heading || project.title);
+        }
         if (section.video) {
           const v = section.video;
           let embedUrl = '';
@@ -122,6 +162,57 @@
         <div class="project-content">${sectionsHTML}</div>
       `;
     }
+
+    // --- Carousels: click a filmstrip frame, or use the arrow keys. No autoplay. ---
+    document.querySelectorAll('[data-carousel]').forEach(root => {
+      const feature = root.querySelector('.carousel-feature');
+      const strip = root.querySelector('.carousel-filmstrip');
+      const thumbs = [...root.querySelectorAll('.carousel-thumb')];
+      const frames = JSON.parse(root.querySelector('.carousel-frames').textContent);
+
+      const show = index => {
+        const frame = frames[index];
+        const thumb = thumbs[index];
+        if (!frame || !thumb) return;
+        feature.src = frame.src;
+        if (frame.srcset) {
+          feature.srcset = frame.srcset;
+          feature.sizes = frame.sizes;
+        } else {
+          feature.removeAttribute('srcset');
+          feature.removeAttribute('sizes');
+        }
+        feature.alt = frame.alt;
+        feature.style.objectPosition = frame.position || 'center';
+        thumbs.forEach(item => {
+          const active = item === thumb;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        const left = thumb.offsetLeft;
+        const right = left + thumb.offsetWidth;
+        if (left < strip.scrollLeft) {
+          strip.scrollTo({ left: left, behavior: 'smooth' });
+        } else if (right > strip.scrollLeft + strip.clientWidth) {
+          strip.scrollTo({ left: right - strip.clientWidth, behavior: 'smooth' });
+        }
+      };
+
+      thumbs.forEach((thumb, index) => {
+        thumb.addEventListener('click', () => show(index));
+      });
+
+      root.addEventListener('keydown', event => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        event.preventDefault();
+        const current = thumbs.findIndex(item => item.classList.contains('is-active'));
+        const next = event.key === 'ArrowRight'
+          ? (current + 1) % thumbs.length
+          : (current - 1 + thumbs.length) % thumbs.length;
+        show(next);
+        thumbs[next].focus();
+      });
+    });
 
     // --- Year ---
     document.getElementById('year').textContent = new Date().getFullYear();

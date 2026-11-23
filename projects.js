@@ -3,7 +3,7 @@
 // ============================================================
 //
 //  HOW TO ADD A NEW PROJECT:
-//  1. Add your project images to the "images/" folder
+//  1. Add your project images to "images/<project>/" (for example images/chessinator/)
 //  2. Copy one of the project objects below
 //  3. Paste it at the TOP of the array (so it shows first)
 //  4. Fill in your details
@@ -37,7 +37,19 @@
 //  biased toward the top of the photo, so a head near the top doesn't get
 //  cut off. You can also use plain words: "top", "bottom", "top left", etc.
 //
-//  This works on ANY image field: thumbnail, heroImages, and section images.
+//  This works on ANY image field: thumbnail, heroImages, section images,
+//  and carousel images.
+//
+//  IMAGE CAROUSEL:
+//  Use "carousel" instead of "images" when a section should show one large
+//  photo with a filmstrip of the rest underneath. The first item is the one
+//  shown large. Nothing moves on its own — a visitor clicks a thumbnail, or
+//  uses the left and right arrow keys, to change the photo.
+//
+//      carousel: [
+//        "images/my-project/hero.jpg",
+//        { src: "images/my-project/detail.jpg", focus: "50% 30%" }
+//      ]
 //
 //  Don't want to guess the numbers? Open crop-helper.html in your browser,
 //  drop the photo in, drag the crosshair to where you want the focus, and
@@ -100,7 +112,7 @@ const PROJECTS = [
     id: "treatturbine",
     title: "TreatTurbine",
     subtitle: "Open-source autonomous treat delivery drone for wildlife",
-    thumbnail: "images/treatturbine-thumb.jpg",
+    thumbnail: "images/treatturbine/treatturbine-thumb.jpg",
     heroTitle: "TreatTurbine",
     sections: [
       {
@@ -109,9 +121,13 @@ const PROJECTS = [
       },
       {
         heading: "The Solution",
-        images: [
-          "images/treatturbine-1.jpg",
-          "images/treatturbine-2.jpg"
+        carousel: [
+          "images/treatturbine/treatturbine-2.jpg",
+          "images/treatturbine/treatturbine-drone-isometric.png",
+          "images/treatturbine/treatturbine-isometric.png",
+          "images/treatturbine/treatturbine-top-down.png",
+          "images/treatturbine/treatturbine-drawing.png",
+          "images/treatturbine/treatturbine-1.jpg"
         ]
       },
       {
@@ -125,16 +141,16 @@ const PROJECTS = [
       {
         heading: "Testing",
         text: "We tested the system in stages. First, we flew a fully autonomous mission in Boston to validate the GPS-guided flight plan and our airframe. Time constraints throughout the academic year pushed our testing into the middle of winter and hampered our testing efforts. However, when Spring came, we pulled all the independently verified components together and traveled to Alveus Sanctuary in Texas. Once there, we performed several shakedown flights in an open field, verifying autonomous flight, airborne treat dispensing, and even radio loss failsafe events. This was followed by a manual test flown with the sanctuary's animal care staff present to confirm not only the safety of the animals, but their comfort. The project culminated in three back-to-back autonomous treat-drop missions flown live on stream, where we were spectated by roughly 1,500 viewers.",
-        images: [
-          "images/treatturbine-3.jpg",
-          "images/treatturbine-4.jpg"
+        carousel: [
+          "images/treatturbine/treatturbine-4.jpg",
+          "images/treatturbine/treatturbine-3.jpg"
         ]
       },
       {
         heading: "Outcome",
         text: "The TreatTurbine successfully and repeatably delivered treats to Awa and Akela in front of a live audience, meeting every requirement Alveus set out. It was safe, reliable, simple to operate, and spectacular to watch. The full project has been taken open source, including the mechanism design and drone build, on GitHub (github.com/skbecken/treatturbine) so other conservationists and hobbyists can build their own. The drone currently remains with Alveus while they finish building the Twitch donation integration that will let viewers trigger drops themselves. We're also hopeful that a system like ours can be used to empower conservationists in missions like vaccine delivery to remote animal populations.",
         images: [
-          "images/treatturbine-5.jpg"
+          "images/treatturbine/treatturbine-5.jpg"
         ]
       }
     ]
@@ -144,8 +160,8 @@ const PROJECTS = [
 
     // What shows on the project card on the home page
     title: "Coin Collecting Robot",
-    subtitle: "Hackathon — 2nd Place",
-    thumbnail: { src: "images/coin-collector-2b.png", focus: "49% 63%" },
+    subtitle: "Hackathon: 2nd Place Finish",
+    thumbnail: { src: "images/coin-collector/coin-collector-2b.png", focus: "49% 63%" },
 
     // Full project page content
     heroTitle: "The Coin Collector",
@@ -157,8 +173,8 @@ const PROJECTS = [
       {
         heading: "The Robot",
         images: [
-          { src: "images/coin-collector-1.jpg", focus: "32% 80%" },
-          { src: "images/coin-collector-2b.png", focus: "49% 63%" }
+          { src: "images/coin-collector/coin-collector-1.jpg", focus: "32% 80%" },
+          { src: "images/coin-collector/coin-collector-2b.png", focus: "49% 63%" }
         ]
       },
       {
@@ -168,7 +184,7 @@ const PROJECTS = [
       {
         heading: "Outcome",
         text: "After 8 rounds of competition, our team placed 2nd overall. Due to the last minute construction of the robot, reliability issues took us out of commission for the first couple of rounds. Significantly stronger performances in the later rounds made up for the lost points and allowed us to overtake our competitors.",
-        images: ["images/coin-collector-outcome.jpg"]
+        images: ["images/coin-collector/coin-collector-outcome.jpg"]
       }
     ]
   },
@@ -177,7 +193,7 @@ const PROJECTS = [
     id: "chessinator",
     title: "Chess-inator",
     subtitle: "Chess-playing robot with 2.5 DOF",
-    thumbnail: "images/chessinator-thumb.png",
+    thumbnail: "images/chessinator/chessinator-thumb.png",
     heroTitle: "Chess-inator",
     sections: [
       {
@@ -187,17 +203,17 @@ const PROJECTS = [
       {
         heading: "The Solution",
         images: [
-          "images/chessinator-1.jpg",
-          "images/chessinator-2.png"
+          "images/chessinator/chessinator-1.jpg",
+          "images/chessinator/chessinator-2.png"
         ]
       },
       {
         heading: "In Action",
-        video: "images/chessinator-video.mov"
+        video: "images/chessinator/chessinator-video.mov"
       },
       {
         heading: "Design Challenges",
-        text: "This project had 3 primary components: The structure and layout, the electronics and integration, and the end effector including the Z axis.\n\nThe structure was fairly straightforward — we decided on aluminum extrusion construction and stepper motors with a belt to drive motion. The board itself was cut from a sheet of acrylic and engraved with a scaled image of a chessboard. Acrylic was chosen for its ease of workability and final surface quality.\n\nThe electronics were complicated because of our chosen manipulation method and control board. We elected to use an electromagnet to capture the piece and a servo driven Z axis to raise and lower the pieces. While the servo could be controlled directly by the MKS 3D printer board, there was no output for the electromagnet. We had originally planned to use the fan output as a switching 12V source, but were unable to validate that method. In the end I found that a motor output could be manipulated into outputting 12V across 2 of its 4 pins with a specific GCODE command. Using parts outside of their intended use case was the breakthrough needed to make this project possible.\n\nThe end effector was engineered with packaging as a priority. Lightweight was a necessity so that the system could make moves as fast as possible. It would have been easier and more precise to use a much larger stepper motor, but that would have raised the weight and size of the end effector unacceptably. Instead, a servo motor was chosen. The servo motor had adequate accuracy and power to move the weight of the electromagnet and a piece without being over-specced (and overweight) for the job."
+        text: "This project had 3 primary components: The structure and layout, the electronics and integration, and the end effector including the Z axis.\n\nThe structure was fairly straightforward; we decided on aluminum extrusion construction and stepper motors with a belt to drive motion. The board itself was cut from a sheet of acrylic and engraved with a scaled image of a chessboard. Acrylic was chosen for its ease of workability and final surface quality.\n\nThe electronics were complicated because of our chosen manipulation method and control board. We elected to use an electromagnet to capture the piece and a servo driven Z axis to raise and lower the pieces. While the servo could be controlled directly by the MKS 3D printer board, there was no output for the electromagnet. We had originally planned to use the fan output as a switching 12V source, but were unable to validate that method. In the end I found that a motor output could be manipulated into outputting 12V across 2 of its 4 pins with a specific GCODE command. Using parts outside of their intended use case was the breakthrough needed to make this project possible.\n\nThe end effector was engineered with packaging as a priority. Lightweight was a necessity so that the system could make moves as fast as possible. It would have been easier and more precise to use a much larger stepper motor, but that would have raised the weight and size of the end effector unacceptably. Instead, a servo motor was chosen. The servo motor had adequate accuracy and power to move the weight of the electromagnet and a piece without being over-specced (and overweight) for the job."
       },
       {
         heading: "Outcome",
@@ -210,7 +226,7 @@ const PROJECTS = [
     id: "flight-club",
     title: "BU Flight Club",
     subtitle: "Center console design for airplane interior",
-    thumbnail: "images/flight-club-thumb.jpg",
+    thumbnail: "images/flight-club/flight-club-thumb.jpg",
     heroTitle: "Center Console Fabrication",
     sections: [
       {
@@ -220,13 +236,13 @@ const PROJECTS = [
       {
         heading: "The Solution",
         images: [
-          "images/flight-club-1.jpg",
-          "images/flight-club-2.jpg"
+          "images/flight-club/flight-club-1.jpg",
+          "images/flight-club/flight-club-2.jpg"
         ]
       },
       {
         heading: "Outcome",
-        text: "I created a system of interchangeable buckets that could support audio connectors, USB plugs, or any future expansion that could slot into cutouts in a carbon fiber plate. Carbon fiber was selected because of its high stiffness, light weight, and undeniable style. It was cut to size on a water jet cutter and the buckets were 3D printed and inserted.\n\nIn the end, the angled buckets provided the needed strain relief and routed the cables in such a manner to save crucial space in the cabin. The carbon fiber and 3D printed plate remains in active use replacing the older compromised fiberglass. The modular design also allows later expansion as deemed necessary."
+        text: "I created a system of interchangeable buckets that could support audio connectors, USB plugs, or any future expansion that could slot into cutouts in a carbon fiber plate. Carbon fiber was selected because of its high stiffness, light weight, and undeniable style. It was cut to size on a water jet cutter and the buckets were 3D printed and inserted.\n\nIn the end, the angled buckets provided the needed strain relief and routed the cables in such a manner to save crucial space in the cabin. The carbon fiber plate and 3D printed inserts remain in active use replacing the older compromised fiberglass. The modular design also allows later expansion as deemed necessary."
       }
     ]
   },
@@ -235,7 +251,7 @@ const PROJECTS = [
     id: "formlabs",
     title: "Formlabs Design Work",
     subtitle: "R&D prototyping and sheet metal design",
-    thumbnail: "images/formlabs-thumb.jpg",
+    thumbnail: "images/formlabs/formlabs-thumb.jpg",
     heroTitle: "Formlabs",
     sections: [
       {
@@ -245,8 +261,8 @@ const PROJECTS = [
       {
         heading: "Sheet Metal Design",
         images: [
-          "images/formlabs-1.jpg",
-          "images/formlabs-2.png"
+          "images/formlabs/formlabs-filter-box-cad-exploded.png",
+          "images/formlabs/formlabs-heater-test-bench-at-furnace.jpg"
         ]
       },
       {
@@ -260,7 +276,7 @@ const PROJECTS = [
     id: "laser-communication",
     title: "Laser Communication System",
     subtitle: "Light-based data transmission system",
-    thumbnail: "images/laser-thumb.png",
+    thumbnail: "images/laser-communication/laser-comm-transmitter-render.png",
     heroTitle: "Laser Communication System",
     sections: [
       {
@@ -270,8 +286,8 @@ const PROJECTS = [
       {
         heading: "The Solution",
         images: [
-          "images/laser-1.png",
-          "images/laser-2.png"
+          "images/laser-communication/laser-comm-turntable-render.png",
+          "images/laser-communication/laser-comm-transmitter-render.png"
         ]
       },
       {
@@ -285,7 +301,7 @@ const PROJECTS = [
     id: "model-plane",
     title: "Model Plane Development",
     subtitle: "Ongoing RC airplane design and iteration",
-    thumbnail: "images/plane-thumb.png",
+    thumbnail: { src: "images/model-plane/model-plane-cad-isometric.png", focus: "42% 50%" },
     heroTitle: "Model Plane Development",
     sections: [
       {
@@ -294,9 +310,13 @@ const PROJECTS = [
       },
       {
         heading: "The Product",
-        images: [
-          "images/plane-1.jpg",
-          "images/plane-2.jpg"
+        carousel: [
+          "images/model-plane/model-plane-cardboard-delta-crashed.jpg",
+          "images/model-plane/model-plane-foam-with-radio.jpg",
+          "images/model-plane/model-plane-foam-landing-gear.jpg",
+          "images/model-plane/model-plane-cad-isometric.png",
+          "images/model-plane/model-plane-cad-tail-rear.png",
+          "images/model-plane/model-plane-twin-boom-cad.jpg"
         ]
       },
       {
@@ -310,7 +330,7 @@ const PROJECTS = [
     id: "protective-covers",
     title: "3D Printed Protective Covers",
     subtitle: "In-process manufacturing protection at Pursuit Aerospace",
-    thumbnail: "images/covers-thumb.jpg",
+    thumbnail: "images/protective-covers/covers-thumb.jpg",
     heroTitle: "3D Printed Protective Covers and Tools",
     sections: [
       {
@@ -320,8 +340,8 @@ const PROJECTS = [
       {
         heading: "The Solution",
         images: [
-          "images/covers-1.jpg",
-          "images/covers-2.jpg"
+          "images/protective-covers/covers-1.jpg",
+          "images/protective-covers/covers-2.jpg"
         ]
       },
       {
@@ -342,10 +362,10 @@ const SITE_CONFIG = {
   linkedIn: "https://www.linkedin.com/in/harrisongrant04/",
   email: "hgrant@bu.edu",
   phone: "781-535-1233",
-  resumeFile: "images/resume.pdf",   // Put your resume PDF in the images folder
+  resumeFile: "images/resume/resume.pdf",   // Put your resume PDF in the images folder
   aboutText: "I'm a mechanical engineer searching for my next challenge. I graduated from Boston University's Mechanical Engineering program with a concentration in robotics. I have industry experience in both the aerospace industry and product research and development. I have a wide breadth of experience in additive manufacturing, prototyping, electronics, and data analysis. ",
   heroImages: [
-    "images/hero-1.jpg",
-    "images/hero-2.jpg"
+    "images/hero/hero-1.jpg",
+    "images/hero/hero-2.jpg"
   ]
 };
