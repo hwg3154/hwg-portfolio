@@ -244,34 +244,6 @@ const OPTIMIZED = {
       "src": "images/opt/model-plane-cad-tail-rear-1324.webp"
     }
   ],
-  "images/model-plane/model-plane-cad-tail-underside.png": [
-    {
-      "w": 640,
-      "src": "images/opt/model-plane-cad-tail-underside-640.webp"
-    },
-    {
-      "w": 960,
-      "src": "images/opt/model-plane-cad-tail-underside-960.webp"
-    },
-    {
-      "w": 1344,
-      "src": "images/opt/model-plane-cad-tail-underside-1344.webp"
-    }
-  ],
-  "images/model-plane/model-plane-carbon-panel-cad.png": [
-    {
-      "w": 640,
-      "src": "images/opt/model-plane-carbon-panel-cad-640.webp"
-    },
-    {
-      "w": 960,
-      "src": "images/opt/model-plane-carbon-panel-cad-960.webp"
-    },
-    {
-      "w": 1536,
-      "src": "images/opt/model-plane-carbon-panel-cad-1536.webp"
-    }
-  ],
   "images/model-plane/model-plane-cardboard-delta-crashed.jpg": [
     {
       "w": 640,
@@ -286,20 +258,6 @@ const OPTIMIZED = {
       "src": "images/opt/model-plane-cardboard-delta-crashed-1600.webp"
     }
   ],
-  "images/model-plane/model-plane-cardboard-delta-interior.jpg": [
-    {
-      "w": 640,
-      "src": "images/opt/model-plane-cardboard-delta-interior-640.webp"
-    },
-    {
-      "w": 960,
-      "src": "images/opt/model-plane-cardboard-delta-interior-960.webp"
-    },
-    {
-      "w": 1500,
-      "src": "images/opt/model-plane-cardboard-delta-interior-1500.webp"
-    }
-  ],
   "images/model-plane/model-plane-foam-landing-gear.jpg": [
     {
       "w": 640,
@@ -312,20 +270,6 @@ const OPTIMIZED = {
     {
       "w": 1600,
       "src": "images/opt/model-plane-foam-landing-gear-1600.webp"
-    }
-  ],
-  "images/model-plane/model-plane-foam-tail-with-leds.jpg": [
-    {
-      "w": 640,
-      "src": "images/opt/model-plane-foam-tail-with-leds-640.webp"
-    },
-    {
-      "w": 960,
-      "src": "images/opt/model-plane-foam-tail-with-leds-960.webp"
-    },
-    {
-      "w": 1170,
-      "src": "images/opt/model-plane-foam-tail-with-leds-1170.webp"
     }
   ],
   "images/model-plane/model-plane-foam-with-radio.jpg": [
@@ -408,8 +352,8 @@ const OPTIMIZED = {
       "src": "images/opt/resume-preview-960.webp"
     },
     {
-      "w": 1228,
-      "src": "images/opt/resume-preview-1228.webp"
+      "w": 1600,
+      "src": "images/opt/resume-preview-1600.webp"
     }
   ],
   "images/treatturbine/treatturbine-1.jpg": [
@@ -480,6 +424,34 @@ const OPTIMIZED = {
     {
       "w": 1600,
       "src": "images/opt/treatturbine-5-1600.webp"
+    }
+  ],
+  "images/treatturbine/treatturbine-drawing.png": [
+    {
+      "w": 640,
+      "src": "images/opt/treatturbine-drawing-640.webp"
+    },
+    {
+      "w": 960,
+      "src": "images/opt/treatturbine-drawing-960.webp"
+    },
+    {
+      "w": 1600,
+      "src": "images/opt/treatturbine-drawing-1600.webp"
+    }
+  ],
+  "images/treatturbine/treatturbine-drone-isometric.png": [
+    {
+      "w": 640,
+      "src": "images/opt/treatturbine-drone-isometric-640.webp"
+    },
+    {
+      "w": 960,
+      "src": "images/opt/treatturbine-drone-isometric-960.webp"
+    },
+    {
+      "w": 1600,
+      "src": "images/opt/treatturbine-drone-isometric-1600.webp"
     }
   ],
   "images/treatturbine/treatturbine-isometric.png": [
